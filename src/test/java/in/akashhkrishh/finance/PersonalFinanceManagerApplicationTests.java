@@ -8,6 +8,7 @@ class PersonalFinanceManagerApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("contextLoads");
 	}
 
 }
