@@ -49,6 +49,7 @@ jobs:
               exit 1
             fi
 
+            cd finance-manager-backend.tar
             docker load -i finance-manager-backend.tar
 
             docker stop backend || true
