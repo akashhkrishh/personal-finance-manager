@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: finance-manager-backend.tar
-          target: ~/finance-manager-backend.tar  # explicitly home directory
+          target: ~/finance-manager-backend.tar   # Include filename explicitly here
 
       - name: Load and run Docker image on server
         uses: appleboy/ssh-action@v0.1.9
