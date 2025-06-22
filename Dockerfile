@@ -17,7 +17,7 @@ RUN ./mvnw dependency:go-offline
 # Copy source code
 COPY src src
 
-# Build the JAR, skip tests for faster build (optional)
+# Build the JAR, skip tests for faster build
 RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Run with JRE 21
@@ -25,8 +25,8 @@ FROM eclipse-temurin:21-jre-jammy
 
 WORKDIR /app
 
-# Copy built JAR from build stage
-COPY --from=build /app/target/finance-manager-0.0.1-SNAPSHOT.jar app.jar
+# Copy the fixed jar from build stage
+COPY --from=build /app/target/app.jar app.jar
 
 # Expose port 8080
 EXPOSE 8080
