@@ -25,7 +25,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
     private final ApplicationContext applicationContext;
     private final JWTService jwtService;
-    private final ObjectMapper objectMapper = new ObjectMapper(); // Used to serialize GlobalResponse to JSON
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public JWTFilter(ApplicationContext applicationContext, JWTService jwtService) {
         this.applicationContext = applicationContext;
