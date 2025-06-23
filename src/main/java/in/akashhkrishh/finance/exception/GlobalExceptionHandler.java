@@ -15,11 +15,6 @@ import java.util.NoSuchElementException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(SecurityException.class)
-    public ResponseEntity<GlobalResponse<Object>> handleSecurityException(SecurityException ex) {
-        return buildResponse(HttpStatus.BAD_REQUEST, "Security Exception", ex.getMessage());
-    }
-
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<GlobalResponse<Object>> handleUsernameNotFoundException(UsernameNotFoundException ex) {
         return buildResponse(HttpStatus.NOT_FOUND,"User not found", ex.getMessage());
@@ -55,11 +50,20 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.NOT_FOUND, "Resource not found", ex.getMessage());
     }
 
+    @ExceptionHandler(UserNotAuthenticatedException.class)
+    public ResponseEntity<GlobalResponse<Object>> handleUserNotAuthenticatedException(UserNotAuthenticatedException ex) {
+        return buildResponse(HttpStatus.UNAUTHORIZED, "User not authenticated", ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<GlobalResponse<Object>> handleInvalidCredentialsException(InvalidCredentialsException ex) {
+        return buildResponse(HttpStatus.UNAUTHORIZED, "Invalid Credentials", ex.getMessage());
+    }
+
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<GlobalResponse<Object>> handleNoResourceFoundException(NoResourceFoundException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, "Resource not found", ex.getMessage());
     }
-
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GlobalResponse<Object>> handleGenericException(Exception ex) {

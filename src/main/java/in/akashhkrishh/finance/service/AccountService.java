@@ -3,6 +3,7 @@ package in.akashhkrishh.finance.service;
 import in.akashhkrishh.finance.dto.AccountResponse;
 import in.akashhkrishh.finance.dto.GlobalResponse;
 import in.akashhkrishh.finance.enums.Category;
+import in.akashhkrishh.finance.exception.UserNotAuthenticatedException;
 import in.akashhkrishh.finance.model.Transaction;
 import in.akashhkrishh.finance.model.User;
 import in.akashhkrishh.finance.repository.TransactionRepository;
@@ -26,6 +27,9 @@ public class AccountService {
 
     public ResponseEntity<GlobalResponse<AccountResponse>> getAccountBalance() {
         User currentUser = getCurrentUser();
+        if (currentUser == null) {
+            throw new UserNotAuthenticatedException("User is not authenticated");
+        }
         List<Transaction> transactions = transactionRepository.findByUser(currentUser);
 
         AccountResponse accountResponse = calculateBalance(transactions);

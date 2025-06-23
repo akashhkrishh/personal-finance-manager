@@ -3,6 +3,7 @@ package in.akashhkrishh.finance.service;
 import in.akashhkrishh.finance.dto.GlobalResponse;
 import in.akashhkrishh.finance.dto.TransactionRequestDTO;
 import in.akashhkrishh.finance.exception.TransactionNotFoundException;
+import in.akashhkrishh.finance.exception.UserNotAuthenticatedException;
 import in.akashhkrishh.finance.model.Transaction;
 import in.akashhkrishh.finance.model.User;
 import in.akashhkrishh.finance.repository.TransactionRepository;
@@ -31,7 +32,7 @@ public class TransactionService {
                 .orElseThrow(() -> new TransactionNotFoundException("Transaction not found for ID: " + id));
         User currentUser = getCurrentUser();
         if (currentUser == null) {
-            throw new SecurityException("Current user is not authenticated.");
+            throw new UserNotAuthenticatedException("Current user is not authenticated.");
         }
         if (!transaction.getUser().getId().equals(currentUser.getId())) {
             throw new TransactionNotFoundException("Transaction ID: " + id + " does not belong to the current user.");
@@ -52,6 +53,9 @@ public class TransactionService {
 
     public ResponseEntity<GlobalResponse<List<Transaction>>> getAllTransactions() {
         User currentUser = getCurrentUser();
+        if (currentUser == null) {
+            throw new UserNotAuthenticatedException("Current user is not authenticated.");
+        }
         List<Transaction> transactions = transactionRepository.findByUser(currentUser);
 
         GlobalResponse<List<Transaction>> response = new GlobalResponse<>(
@@ -66,6 +70,9 @@ public class TransactionService {
     public ResponseEntity<GlobalResponse<Transaction>> createTransaction(TransactionRequestDTO transactionRequestDTO) {
 
         User currentUser = getCurrentUser();
+        if (currentUser == null) {
+            throw new UserNotAuthenticatedException("Current user is not authenticated.");
+        }
         Transaction transaction = new Transaction();
         transaction.setUser(currentUser);
         BeanUtils.copyProperties(transactionRequestDTO, transaction);
@@ -82,6 +89,10 @@ public class TransactionService {
     }
 
     public ResponseEntity<GlobalResponse<Transaction>> updateTransaction(UUID id, TransactionRequestDTO transactionRequestDTO) {
+        User currentUser = getCurrentUser();
+        if (currentUser == null) {
+            throw new UserNotAuthenticatedException("Current user is not authenticated.");
+        }
         Transaction transaction = getTransactionById(id);
         transaction.setAmount(transactionRequestDTO.amount());
         transaction.setDescription(transactionRequestDTO.description());
@@ -97,6 +108,10 @@ public class TransactionService {
     }
 
     public ResponseEntity<GlobalResponse<Transaction>> deleteTransaction(UUID id) {
+        User currentUser = getCurrentUser();
+        if (currentUser == null) {
+            throw new UserNotAuthenticatedException("Current user is not authenticated.");
+        }
         Transaction transaction = getTransactionById(id);
         transactionRepository.deleteById(id);
         GlobalResponse<Transaction> response = new GlobalResponse<>(

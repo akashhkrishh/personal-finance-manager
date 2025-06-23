@@ -22,7 +22,7 @@ public class JWTService {
     private SecretKey getSigningKey() {
         byte[] keyBytes;
         try {
-            keyBytes = Decoders.BASE64.decode(secret);
+            keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         } catch (IllegalArgumentException e) {
             keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         }

@@ -1,6 +1,36 @@
 # Personal-finance-manager
 Develop a Personal Finance Manager, a RESTful web application that allows users to manage financial transactions securely. The application will include user authentication, CRUD operations for transactions, and a balance calculation feature, all within a BFSI context. Candidates will use this project to learn and demonstrate proficiency in the specified tech stack.
 
+### Testing API Endpoints
+``` bash
+
+#register - data( username, email, password )
+POST - http://localhost:8080/api/auth/register  - open route
+
+#login - data( email, password )
+POST - http://localhost:8080/api/auth/login - open route
+
+#create transaction - data ( amount, description, category )
+POST - http://localhost:8080/api/transactions - authenticated route
+
+#get single transaction
+GET - http://localhost:8080/api/transactions/?id={id}  - authenticated route
+
+#get all transaction (if user autheticated only shows currentuser
+GET - http://localhost:8080/api/transactions/all  - authenticated route
+
+#update transaction - ( amount, description, category )
+PUT - http://localhost:8080/api/transactions/?id={id}  - authenticated route
+
+#delete single transaction
+DELETE - http://localhost:8080/api/transactions/?id={id} - authenticated route
+
+#get balance
+GET - http://localhost:8080/api/account/getBalance  - authenticated route
+
+```
+
+
 ## H2-CONSOLE
 
 ### Modifying and Displaying Dummy User & Transactions Data

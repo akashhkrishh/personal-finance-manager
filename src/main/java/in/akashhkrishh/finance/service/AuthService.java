@@ -4,6 +4,7 @@ import in.akashhkrishh.finance.dto.GlobalResponse;
 import in.akashhkrishh.finance.dto.LoginRequest;
 import in.akashhkrishh.finance.dto.RegisterRequest;
 import in.akashhkrishh.finance.dto.TokenResponse;
+import in.akashhkrishh.finance.exception.InvalidCredentialsException;
 import in.akashhkrishh.finance.exception.UserAlreadyExistsException;
 import in.akashhkrishh.finance.model.User;
 import in.akashhkrishh.finance.repository.UserRepository;
@@ -44,7 +45,7 @@ public class AuthService {
 
         User user = users.getFirst();
         if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-            throw new IllegalArgumentException("Invalid credentials provided.");
+            throw new InvalidCredentialsException("Invalid email or password.");
         }
 
         String token = jwtService.generateToken(user.getId());
