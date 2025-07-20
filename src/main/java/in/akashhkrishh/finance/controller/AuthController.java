@@ -7,10 +7,10 @@ import in.akashhkrishh.finance.dto.TokenResponse;
 import in.akashhkrishh.finance.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -32,6 +32,20 @@ public class AuthController {
     public ResponseEntity<GlobalResponse<TokenResponse>> register(@Valid @RequestBody RegisterRequest registerRequest) {
         return authService.register(registerRequest);
     }
+
+//    @GetMapping("/info")
+//    public ResponseEntity<?> getInfo() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//
+//        if (auth.getDetails() instanceof WebAuthenticationDetails details) {
+//            String ip = details.getRemoteAddress();
+//            String sessionId = details.getSessionId();
+//            return ResponseEntity.ok("Logged in from IP: " + ip + ", session: " + sessionId);
+//        }
+//
+//        return ResponseEntity.ok("No details available");
+//    }
+
 
 }
 

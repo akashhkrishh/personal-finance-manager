@@ -25,6 +25,10 @@ public class AccountService {
         this.transactionRepository = transactionRepository;
     }
 
+    /**
+     * Gets all users in the system.
+     * @return List of users.
+     */
     public ResponseEntity<GlobalResponse<AccountResponse>> getAccountBalance() {
         User currentUser = getCurrentUser();
         if (currentUser == null) {

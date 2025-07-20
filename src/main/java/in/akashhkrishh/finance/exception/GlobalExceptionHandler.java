@@ -70,7 +70,6 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", ex.getMessage());
     }
 
-
     private ResponseEntity<GlobalResponse<Object>> buildResponse(HttpStatus status, String msg, String err) {
         return ResponseEntity.status(status)
                 .body(new GlobalResponse<>(null, msg, err, false));
